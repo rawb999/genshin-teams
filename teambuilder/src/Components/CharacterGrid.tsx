@@ -208,7 +208,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
 
   const submitSelectedCharacters = async () => {
     try {
-      const response = await fetch("http://localhost:5000/submit-characters", {
+      const response = await fetch("https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
