@@ -15,11 +15,13 @@ function App() {
 
 
   const handleNewTeam = (newTeam: Team) => {
-    if (teams.length < 5) {
-      setTeams((prevTeams: TeamsState) => [...prevTeams, newTeam]);
-    } else {
-      alert("Maximum of 5 teams have been generated.");
-    }
+    setTeams((prevTeams: TeamsState) => {
+      if (prevTeams.length < 5) {
+        return [...prevTeams, newTeam];
+      } else {
+        return [newTeam, ...prevTeams.slice(1)];
+      }
+    });
   };
 
   return (
