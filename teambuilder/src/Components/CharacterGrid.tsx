@@ -200,6 +200,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
       if (primaryCharacter === characterName) {
         // If deselecting the primary character, also clear the primary status
         setPrimaryCharacter(null);
+        setSelectedTeamType(null);
       }
       setSelectedCharacters((prev) =>
         prev.includes(characterName)
