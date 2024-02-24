@@ -217,6 +217,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
       return;
     }
 
+    console.log("Selected Team Type:", selectedTeamType);
     if (!selectedTeamType) {
       alert("Please select a team type for your primary character.");
       return; // Stop the submission if no team type is selected
@@ -230,7 +231,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/submit-characters", {
+      const response = await fetch("https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
