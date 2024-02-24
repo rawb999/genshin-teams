@@ -132,7 +132,7 @@ const characters = [
   { id: 40, name: "raiden", imageSrc: raidenImage, teamTypes: ['Hypercarry', 'Hyperbloom'] },
 
   { id: 41, name: "sara", imageSrc: saraImage, teamTypes: ['Raiden Hyper', 'Quicken Keqing'] },
-  { id: 42, name: "yoimiya", imageSrc: yoimiyaImage, teamTypes: ['Quicken', 'Overvape'] },
+  { id: 42, name: "yoimiya", imageSrc: yoimiyaImage, teamTypes: ['Vaporize', 'Overvape'] },
   { id: 43, name: "sayu", imageSrc: sayuImage, teamTypes: ['Off-Field Aggravate', 'On-Field Driver'] },
   { id: 44, name: "ayaka", imageSrc: ayakaImage, teamTypes: ['Freeze', 'Monocryo'] },
   { id: 45, name: "kazuha", imageSrc: kazuhaImage, teamTypes: ['Freeze', 'Reverse Vape'] },
@@ -189,6 +189,9 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
   const handleCharacterClick = (characterName: string) => {
     if (isPrimarySelectionEnabled) {
       setPrimaryCharacter(characterName);
+      setSelectedTeamType(null);
+
+
       if (!selectedCharacters.includes(characterName)) {
         setSelectedCharacters((prev) => [...prev, characterName]);
       }
@@ -205,10 +208,23 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
       );
     }
   };
-
+/* http://127.0.0.1:5000/submit-characters  */ 
+/* https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters */ 
   const submitSelectedCharacters = async () => {
+    if (!primaryCharacter) {
+      alert("Please select a primary character before submitting.")
+      return;
+    }
+
+    const primaryCharData = characters.find(char => char.name === primaryCharacter);
+
+    if (primaryCharData && primaryCharData.teamTypes.length === 0) {
+      alert("The selected primary character does not have any team types available. Please select a different primary character and try again.");
+      return; //prevent submission if no team types are available
+    }
+
     try {
-      const response = await fetch("https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters", {
+      const response = await fetch("http://127.0.0.1:5000/submit-characters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -235,9 +251,18 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
       (char) => char.name === primaryCharacter
     );
     if (!primaryCharData) return null; 
+
+    if (primaryCharData.teamTypes.length === 0) {
+      return (
+        <div className="no-team-types-message">
+          <p>No team types available for {primaryCharData.name}. Please select another character as your primary.</p>
+        </div>
+      );
+    }
+
     return (
       <div className="team-type-selection">
-        <p>Select a team type for {primaryCharData.name}:</p>
+        <p style={{ color: 'black' }}>Select a team type for {primaryCharData.name}:</p>
         {primaryCharData.teamTypes.map((type) => (
           <button
             key={type}
