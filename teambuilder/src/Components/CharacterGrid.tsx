@@ -217,6 +217,11 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ onCharactersSelected }) =
       return;
     }
 
+    if (!selectedTeamType) {
+      alert("Please select a team type for your primary character.");
+      return; // Stop the submission if no team type is selected
+    }
+
     const primaryCharData = characters.find(char => char.name === primaryCharacter);
 
     if (primaryCharData && primaryCharData.teamTypes.length === 0) {
