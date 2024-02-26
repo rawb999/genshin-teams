@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Character from "./Character"; // Adjust the import path as necessary
 
 import xianyunImage from "../Images/xianyun.png";
 import gamingImage from "../Images/Gaming.png";
@@ -451,29 +450,40 @@ type TeamsState = Team[];
 
 interface ResultGridProps {
   teams: TeamsState;
+  onDeleteTeam: (index: number) => void;
 }
 
-const ResultGrid: React.FC<ResultGridProps> = ({ teams }) => {
+const ResultGrid: React.FC<ResultGridProps> = ({ teams, onDeleteTeam }) => {
   // Function to find character image by name
   const findCharacterImage = (name: string) => {
     const character = characters.find((c) => c.name === name);
-    return character ? character.imageSrc : '';
+    return character ? character.imageSrc : "";
   };
 
   return (
     <div className="result-grid-container">
-      <p>Generated Teams</p>
+      <header className="header">Generated Teams</header>
       {teams.map((team, teamIndex) => (
         <div key={teamIndex} className="team-container">
-          <header>Team {teamIndex + 1}</header>
+          
           <div className="result-grid">
             {team.map((characterName, charIndex) => {
               const imageSrc = findCharacterImage(characterName);
               return (
-                <img src={imageSrc} alt={characterName} key={`${teamIndex}-${charIndex}`} />
+                <img
+                  src={imageSrc}
+                  alt={characterName}
+                  key={`${teamIndex}-${charIndex}`}
+                />
               );
             })}
           </div>
+          <button
+            className="delete-team-button"
+            onClick={() => onDeleteTeam(teamIndex)}
+          >
+            Delete Team
+          </button>
         </div>
       ))}
     </div>

@@ -15,27 +15,27 @@ function App() {
 
 
   const handleNewTeam = (newTeam: Team) => {
-    setTeams((prevTeams: TeamsState) => {
-      if (prevTeams.length < 5) {
-        return [...prevTeams, newTeam];
-      } else {
-        return [newTeam, ...prevTeams.slice(1)];
-      }
-    });
+    if (teams.length >= 10) {
+      alert("Maximum number of teams reached. Please delete a team before adding a new one.");
+    } else {
+      setTeams((prevTeams) => [...prevTeams, newTeam]);
+    }
+  };
+
+  const handleDeleteTeam = (indexToDelete: number) => {
+    setTeams((prevTeams) => prevTeams.filter((_, index) => index !== indexToDelete));
   };
 
   return (
     <div className="App">
-      ...
       <main>
         <div className="page-container">
           <div className="left-content">
             <CharacterGrid onCharactersSelected={handleNewTeam} />
           </div>
-          <div className="middle-content">
-            <ResultGrid teams={teams} />
+          <div className="right-content">
+          <ResultGrid teams={teams} onDeleteTeam={handleDeleteTeam} />
           </div>
-          ...
         </div>
       </main>
     </div>

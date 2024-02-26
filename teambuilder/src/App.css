@@ -1,59 +1,84 @@
 body {
-  background-image: url("./forest-background.png"); /* Adjust the path as needed */
+  background-image: url("./inazuma.jpg"); 
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  color: rgb(255, 230, 4);
+  background-attachment: fixed;
+  color:white;
+
 }
 
 .App {
-  margin: auto;
+
 }
 
 .page-container {
+
   display: flex;
-  /*width: 100%;*/ 
-  max-width: 100vw; 
-  justify-content:center;
+  width: 70%; 
+  height: 100vh;
+  justify-content: center;
+  margin: 0 auto; 
   
 }
 
 
-.left-content, .middle-content {
+.left-content, .right-content {
   flex: 1; 
-  max-width: 27%; 
-  /*width: 100%; */
+  height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0px;
+  background-color: #121418;
+  border-style:ridge;
+  border-color:#a68d55;
+  
+}
+
+.left-content {
+  margin-left:5%;
+  margin-right:2.5%;
+  width:50%
+}
+
+.right-content {
+  width:50%;
+  margin-right:5%;
+  margin-left:2.5%;
+}
+
+.header {
+  background-color: #a68d55;
+  text-align: center;
+  font-size:x-large;
+
 }
 
 .character-grid {
+
   display: grid;
   grid-template-columns: repeat(7, minmax(60px, 1fr)); 
   gap: 10px;
   overflow-y: auto; 
-  max-height: 70vh; 
+  max-height: 70vh;
+ 
   
-  background-image: url('./black.jpg');
-  background-size: cover; 
-  background-position: center; 
+
   border-style:ridge;
+  border-color:#a68d55;
 }
 
 .result-grid-container {
-  margin-left: 5vh;
+  overflow-y: auto; 
 }
 
 .result-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(60px, 1fr));
-  overflow-y: auto; 
-  min-height: 10vh; 
+  
   background-image: url('./black.jpg');
   background-size: cover; 
   background-position: center; 
   border-style:ridge;
+  border-color:#a68d55;
 }
 
 .result-grid img {
@@ -70,15 +95,22 @@ body {
   display:flex;
 }
 
+.delete-team-button {
+  margin: 4px 2px;
+  background-color: rgb(150, 23, 23);
+  color:white;
+}
+
 .instructions {
   align-self: flex-start;
 }
 
 .fancyButton {
-  background-color: #20e007; 
+  background-color: #a68d55;
   border: none;
   color: white;
-  padding: 15px 32px;
+  
+  
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -113,13 +145,13 @@ body {
   padding: 10px;
   margin: 5px;
   border: 2px solid transparent;
-  background-color: #f0f0f0;
+  background-color: #a68d55;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .pressed {
-  background-color: #e0e0e0; 
+  background-color: #726548; 
   border-color: #aaa; 
   transform: translateY(2px); 
 }
