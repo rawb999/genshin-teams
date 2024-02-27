@@ -339,7 +339,7 @@ characters_info_original = {
                     "diona",
                     "xingqiu",
                     "yelan",
-                    "furinakokomi",
+                    "furina, kokomi",
                     "furina",
                     "kazuha",
                     "jean",
