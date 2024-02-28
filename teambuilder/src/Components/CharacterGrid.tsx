@@ -489,6 +489,18 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
       );
     }
   };
+
+  const selectAllCharacters = () => {
+    const allCharacterNames = characters.map((character) => character.name);
+    setSelectedCharacters(allCharacterNames);
+  };
+
+  const deselectAllCharacters = () => {
+    setSelectedCharacters([]);
+    setPrimaryCharacter(null);
+    setSelectedTeamType(null);
+  };
+
   /* http://127.0.0.1:5000/submit-characters  */
   /* https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters */
   const submitSelectedCharacters = async () => {
@@ -515,7 +527,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
     }
 
     try {
-      const response = await fetch("https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters", {
+      const response = await fetch("http://127.0.0.1:5000/submit-characters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -535,7 +547,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
     }
   };
 
-  const renderTeamTypeSelection = () => {
+  const renderTeamTypeDropdown = () => {
     if (!primaryCharacter) return null;
 
     const primaryCharData = characters.find(
@@ -544,39 +556,61 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
     if (!primaryCharData) return null;
 
     if (primaryCharData.teamTypes.length === 0) {
-      return (
-        <div className="no-team-types-message">
-          <p>
-            No team types available for {primaryCharData.name}. Please select
-            another character as your primary.
-          </p>
-        </div>
-      );
+      return <div>No team types available for {primaryCharData.name}.</div>;
     }
 
     return (
-      <div className="team-type-selection">
-        <p>Select a team type for {primaryCharData.name}:</p>
-        {primaryCharData.teamTypes.map((type) => (
-          <button
-            key={type}
-            onClick={() => setSelectedTeamType(type)}
-            className={`button ${selectedTeamType === type ? "pressed" : ""}`}
-          >
-            {type}
-          </button>
-        ))}
+      <div className="team-type-dropdown">
+        <label htmlFor="teamTypeSelect">
+          Team type for {primaryCharData.name}:
+        </label>
+        <select
+          id="teamTypeSelect"
+          value={selectedTeamType || ""}
+          onChange={(e) => setSelectedTeamType(e.target.value)}
+          className="dropdown"
+        >
+          <option value="">Select Team Type</option>
+          {primaryCharData.teamTypes.map((type, index) => (
+            <option key={index} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
       </div>
     );
   };
 
   return (
+    
     <div>
+      <header className="header">Select Characters</header>
       <p>
         Select the characters you own, select primary to select a character you
         want to base your team around, then select the type of team
       </p>
-      <header className="header">Owned Characters</header>
+
+      
+      <div className="buttonRow">
+        <button
+          className="fancyButton"
+          onClick={() =>
+            setIsPrimarySelectionEnabled(!isPrimarySelectionEnabled)
+          }
+        >
+          {isPrimarySelectionEnabled
+            ? "Cancel Primary Selection"
+            : "Select Primary"}
+        </button>
+
+        {renderTeamTypeDropdown()}
+        <button className="selectAllButton" onClick={selectAllCharacters}>
+          Select All
+        </button>
+        <button className="deselectButton" onClick={deselectAllCharacters}>
+          Deselect All
+        </button>
+      </div>
       <div className="character-grid">
         {characters.map(({ id, name, imageSrc }) => (
           <Character
@@ -589,22 +623,9 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
           />
         ))}
       </div>
-      <div className="buttonRow">
-        <button
-          className="fancyButton"
-          onClick={() =>
-            setIsPrimarySelectionEnabled(!isPrimarySelectionEnabled)
-          }
-        >
-          {isPrimarySelectionEnabled
-            ? "Cancel Primary Selection"
-            : "Select Primary"}
-        </button>
-        <button className="fancyButton" onClick={submitSelectedCharacters}>
-          Submit Selection
-        </button>
-      </div>
-      {renderTeamTypeSelection()}
+      <button className="submitButton" onClick={submitSelectedCharacters}>
+        Submit
+      </button>
     </div>
   );
 };
