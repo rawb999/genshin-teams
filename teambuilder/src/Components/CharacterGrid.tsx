@@ -623,9 +623,11 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
           />
         ))}
       </div>
+      <div className = 'container-submit'>
       <button className="submitButton" onClick={submitSelectedCharacters}>
         Submit
       </button>
+      </div>
     </div>
   );
 };
