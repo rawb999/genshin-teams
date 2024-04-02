@@ -599,7 +599,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
           }
         >
           {isPrimarySelectionEnabled
-            ? "Cancel Primary Selection"
+            ? "Cancel Selection"
             : "Select Primary"}
         </button>
 
