@@ -527,7 +527,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({
     }
 
     try {
-      const response = await fetch("https://stark-springs-59996-346d3e0956cb.herokuapp.com/submit-characters", {
+      const response = await fetch("http://127.0.0.1:5000/submit-characters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
